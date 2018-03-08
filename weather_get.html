@@ -1,0 +1,45 @@
+<html>
+<head>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<h4>Enter Api Url here:</h4>
+    <textarea rows=6 cols = 50 id="real"></textarea>
+	<button type="button" id="btn" onclick="loadDoc()">Click Me to get data!</button>
+	<button type="button" onclick="clearResult()">Clear Result</button>
+	<p id="weather_diff"></p>
+
+<script>
+function loadDoc() {
+console.log('begin');
+var xhr = new XMLHttpRequest();
+var realUrl = document.querySelector('#real').value;
+var url = "http://api.openweathermap.org/data/2.5/weather?q=" + realUrl + "&APPID=b14ad5675d346d0c48e5814506bb7ea1&units=metric";
+xhr.open("GET", url, true);
+xhr.onreadystatechange = function() {
+            console.log('onreadystatechange');
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var parsedReponseText = JSON.parse(xhr.responseText);
+                var temp = JSON.stringify(parsedReponseText.main.temp);
+                document.getElementById('weather_diff').innerHTML = "The temperature of " + realUrl + " is: " + temp + "C";
+            }
+            else {
+                console.log('readyState=' + xhr.readyState + ', status: ' + xhr.status);
+                document.getElementById('weather_diff').innerHTML  = "Sorry, the city is not found";
+
+            }
+        }
+console.log('sending...')
+xhr.send();
+console.log('end');
+}
+
+function clearResult() {
+  document.getElementById('weather_diff').innerHTML = '';
+}
+</script>
+
+</body>
+</html>
+
+

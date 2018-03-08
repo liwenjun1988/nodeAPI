@@ -1,0 +1,39 @@
+<html>
+<head>
+	<script src="./p5.js"></script>
+</head>
+<body>
+	<button type="button" id="btn" onclick="clickMe()">Click Me!</button>
+	<p id="weather_diff"></p>
+	
+	<script>
+		var weatherNY;
+		var weatherDT;
+		function setup(){
+			var urlNY = "http://api.openweathermap.org/data/2.5/weather?q=New%20York&APPID=b14ad5675d346d0c48e5814506bb7ea1&units=metric";
+			var urlDT = "http://api.openweathermap.org/data/2.5/weather?q=Datong&APPID=b14ad5675d346d0c48e5814506bb7ea1&units=metric";
+			loadJSON(urlNY, callbackNY);
+			loadJSON(urlDT, callbackDT);
+		}
+
+		function callbackNY(data){
+			if(data){
+				weatherNY = data.main.temp;
+			}
+		}
+
+		function callbackDT(data){
+			if(data){
+				weatherDT = data.main.temp;
+			}
+		}
+
+		function clickMe(){
+			var weather_diff = weatherNY - weatherDT;
+			var txt = "The weather difference between New York and Datong is: " + weather_diff + "C";
+			document.getElementById("weather_diff").innerHTML = txt;
+		}
+		
+	</script>
+</body>
+</html>
